@@ -1,10 +1,8 @@
 {
-
   "scripts": {
-    "wdio": "wdio run wdio.conf.js"
+    "test": "wdio run src/config/wdio.conf.js"
   },
   "name": "wdrio_workshop",
-  "type": "module",
   "devDependencies": {
     "@wdio/cli": "^8.40.2",
     "@wdio/local-runner": "^8.40.2",
