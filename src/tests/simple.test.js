@@ -1,6 +1,13 @@
+const DashboardPage = require ('./../po/pages/dashboard.page.js');
+const DoctorsPage = require('./../po/pages/doctors.page');
+
+const dashboardPage = new DashboardPage();
+const doctorsPage = new DoctorsPage();
+
+
 describe('Doctors page', () => {
   beforeEach(async () => {
-    await browser.url('https://ej2.syncfusion.com/showcase/angular/appointmentplanner/#/dashboard')
+     await dashboardPage.open()
   })
 
   it('Check page title', async () => {
@@ -8,16 +15,16 @@ describe('Doctors page', () => {
   })
 
   it('Open modal to add new Doctor', async () => {
-    await $("div[routerLink='/doctors']").click();
-    await $('.specialization-types button.e-control').click()
-    await expect($('.new-doctor-dialog')).toBeDisplayed()
+    await dashboardPage.sideMenu.item('doctors').click();
+    await doctorsPage.doctorListHeader.addNewDoctorBtn.click();
+    await expect(doctorsPage.addDoctorModal.rootEl).toBeDisplayed()
 
   })
 
   it('Adding new Doctor', async  () => {
-    await $("div[routerLink='/doctors']").click();
-    await $('.specialization-types button.e-control').click();
-    await $('.new-doctor-dialog').waitForDisplayed();
+    await dashboardPage.sideMenu.item('doctors').click();
+    await doctorsPage.doctorListHeader.addNewDoctorBtn.click();
+    await doctorsPage.addDoctorModal.rootEl.waitForDisplayed();
 
     await $('[name="Name"]').setValue('John Joe');
     await $('#DoctorMobile').setValue('838383838383');
@@ -27,18 +34,18 @@ describe('Doctors page', () => {
 
     await $('.e-footer-content button.e-primary').click();
 
-    await expect($('.new-doctor-dialog')).not.toBeDisplayed();
+    await expect(doctorsPage.addDoctorModal.rootEl).not.toBeDisplayed();
 
     await expect($('#Specialist_8').$('.name')).toHaveText('Dr. John Joe');
     await expect($('#Specialist_8').$('.education')).toHaveText('Basic',{ignoreCase: true});
   });
 
-  it('close a modal window for adding new doctor', async () => {
-    await $("div[routerLink='/doctors']").click();
-    await $('.specialization-types button.e-control').click();
-    await $('.new-doctor-dialog').waitForDisplayed();
-    await $(`.new-doctor-dialog .e-dlg-closeicon-btn`).click();
-    await expect($('.new-doctor-dialog')).not.toBeDisplayed()
+  it('Close a modal window for adding new doctor', async () => {
+    await dashboardPage.sideMenu.item('doctors').click();
+    await doctorsPage.doctorListHeader.addNewDoctorBtn.click();
+    await doctorsPage.addDoctorModal.rootEl.waitForDisplayed();
+    await doctorsPage.addDoctorModal.rootEl.$(` .e-dlg-closeicon-btn`).click();
+    await expect(doctorsPage.addDoctorModal.rootEl).not.toBeDisplayed()
 
   });
 
