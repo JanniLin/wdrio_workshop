@@ -1,13 +1,11 @@
-const SideMenuComponent = require('./../components/common/sidemenu.component.js')
+const SideMenuComponent = require('./../components/common/sidemenu.component.js');
+const BasePage = require('./base.page');
 
-class DashboardPage {
+class DashboardPage extends BasePage {
   constructor() {
-    this.sideMenu = new SideMenuComponent()
-  }
-
-  async open () {
-    await browser.url('https://ej2.syncfusion.com/showcase/angular/appointmentplanner/#/dashboard')
-
+    super('/showcase/angular/appointmentplanner/#/dashboard');
+    this.sideMenu = new SideMenuComponent();
   }
 }
-module.exports = DashboardPage
+
+module.exports = DashboardPage;
